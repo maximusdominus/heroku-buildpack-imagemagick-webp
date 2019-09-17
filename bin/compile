@@ -93,5 +93,6 @@ mkdir -p $(dirname $PROFILE_PATH)
 
 echo "export CPATH=$CPATH:$ACTUAL_INSTALL_PATH/include:$INSTALL_DIR/include" >> $PROFILE_PATH
 echo "export PATH=$ACTUAL_INSTALL_PATH/bin:\$PATH" >> $PROFILE_PATH
-echo "export PATH=$ACTUAL_INSTALL_PATH/etc/ImageMagick-6:\$PATH" >> $PROFILE_PATH
+echo "export PATH=$ACTUAL_INSTALL_PATH/etc/ImageMagick-7:\$PATH" >> $PROFILE_PATH
 echo "export LD_LIBRARY_PATH=$ACTUAL_INSTALL_PATH/lib:\$LD_LIBRARY_PATH" >> $PROFILE_PATH
+echo "export MAGICK_CONFIGURE_PATH=$ACTUAL_INSTALL_PATH/etc/ImageMagick-7" >> $PROFILE_PATH
