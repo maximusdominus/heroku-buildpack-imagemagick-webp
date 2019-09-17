@@ -3,7 +3,7 @@
 BUILD_DIR=$1
 CACHE_DIR=$2
 
-IMAGE_MAGICK_VERSION="7.0.7-39"
+IMAGE_MAGICK_VERSION="7.0.8-65"
 LIBWEBP_VERSION="1.0.3"
 
 VENDOR_DIR="$BUILD_DIR/vendor"
@@ -29,10 +29,12 @@ if [ ! -f $CACHE_FILE ]; then
 
   echo "-----> Building libwebp"
   cd $LIBWEBP_DIR
+  export LDFLAGS="-L/usr/lib/x86_64-linux-gnu"
   ./configure --prefix=$INSTALL_DIR --disable-static
   make && make install
   cd ..
   rm -rf $LIBWEBP_DIR
+  unset LDFLAGS
 
   # install imagemagick
 
@@ -63,7 +65,7 @@ if [ ! -f $CACHE_FILE ]; then
   export CPPFLAGS="-I$INSTALL_DIR/include"
   export LDFLAGS="-L$INSTALL_DIR/lib"
 
-  ./configure --prefix=$INSTALL_DIR --with-webp --with-gvc=no --with-quantum-depth=8 --disable-static
+  ./configure --prefix=$INSTALL_DIR --with-webp=yes --with-gvc=no --with-quantum-depth=8 --disable-static
   make && make install
   cd ..
   rm -rf $IMAGE_MAGICK_DIR
@@ -93,5 +95,6 @@ mkdir -p $(dirname $PROFILE_PATH)
 
 echo "export CPATH=$CPATH:$ACTUAL_INSTALL_PATH/include:$INSTALL_DIR/include" >> $PROFILE_PATH
 echo "export PATH=$ACTUAL_INSTALL_PATH/bin:\$PATH" >> $PROFILE_PATH
-echo "export PATH=$ACTUAL_INSTALL_PATH/etc/ImageMagick-6:\$PATH" >> $PROFILE_PATH
+echo "export PATH=$ACTUAL_INSTALL_PATH/etc/ImageMagick-7:\$PATH" >> $PROFILE_PATH
 echo "export LD_LIBRARY_PATH=$ACTUAL_INSTALL_PATH/lib:\$LD_LIBRARY_PATH" >> $PROFILE_PATH
+echo "export MAGICK_CONFIGURE_PATH=$ACTUAL_INSTALL_PATH/etc/ImageMagick-7" >> $PROFILE_PATH
